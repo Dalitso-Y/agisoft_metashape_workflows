@@ -1,0 +1,84 @@
+{
+  "project": {
+    "chunk_label": "Aerial RTK (no GCPs)",
+    "project_path": "output/aerial_rtk_no_gcps/project.psx"
+  },
+  "input": {
+    "photo_dirs": ["D:/DATA/PROJECT/photos"],
+    "photo_globs": ["*.JPG", "*.jpg", "*.tif", "*.tiff"],
+    "recursive": true,
+    "crs_epsg": "EPSG::4326"
+  },
+  "reference": {
+    "enabled": false
+  },
+  "processing": {
+    "stage": "aerial_products",
+    "match_photos": {
+      "downscale": 1,
+      "generic_preselection": true,
+      "reference_preselection": true,
+      "keypoint_limit": 40000,
+      "tiepoint_limit": 4000,
+      "guided_matching": false
+    },
+    "align_cameras": {
+      "min_image": 2,
+      "adaptive_fitting": false
+    },
+    "optimize_cameras": {
+      "enabled": true
+    },
+    "build_depth_maps": {
+      "enabled": true,
+      "downscale": 2,
+      "filter_mode": "MildFiltering"
+    },
+    "build_point_cloud": {
+      "enabled": true,
+      "source_data": "DepthMapsData",
+      "point_colors": true,
+      "point_confidence": false
+    },
+    "build_dem": {
+      "enabled": true,
+      "source_data": "PointCloudData",
+      "interpolation": "EnabledInterpolation",
+      "resolution": 0
+    },
+    "build_orthomosaic": {
+      "enabled": true,
+      "surface_data": "ElevationData",
+      "blending_mode": "MosaicBlending",
+      "ghosting_filter": false,
+      "resolution": 0
+    }
+  },
+  "export": {
+    "output_dir": "output/aerial_rtk_no_gcps/exports",
+    "report": {
+      "enabled": true,
+      "path": "output/aerial_rtk_no_gcps/exports/report.pdf",
+      "title": "Aerial RTK (no GCPs)"
+    },
+    "rasters": [
+      {
+        "enabled": true,
+        "path": "output/aerial_rtk_no_gcps/exports/dem.tif",
+        "format": "RasterFormatGeoTIFF",
+        "source_data": "ElevationData",
+        "save_world": true
+      },
+      {
+        "enabled": true,
+        "path": "output/aerial_rtk_no_gcps/exports/ortho.tif",
+        "format": "RasterFormatGeoTIFF",
+        "source_data": "OrthomosaicData",
+        "save_world": true
+      }
+    ],
+    "model": {
+      "enabled": false
+    }
+  }
+}

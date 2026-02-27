@@ -1,0 +1,71 @@
+{
+  "project": {
+    "chunk_label": "Turntable Object Scan",
+    "project_path": "output/terrestrial_object_scan_turntable/project.psx"
+  },
+  "input": {
+    "photo_dirs": ["D:/DATA/OBJECT_SCAN/photos"],
+    "photo_globs": ["*.JPG", "*.jpg", "*.png"],
+    "recursive": true
+  },
+  "reference": {
+    "enabled": false
+  },
+  "processing": {
+    "stage": "object_model_texture",
+    "match_photos": {
+      "downscale": 1,
+      "generic_preselection": true,
+      "reference_preselection": false,
+      "keypoint_limit": 60000,
+      "tiepoint_limit": 8000
+    },
+    "align_cameras": {
+      "min_image": 2
+    },
+    "optimize_cameras": {
+      "enabled": true
+    },
+    "build_depth_maps": {
+      "enabled": true,
+      "downscale": 2,
+      "filter_mode": "MildFiltering"
+    },
+    "build_point_cloud": {
+      "enabled": false
+    },
+    "build_model": {
+      "enabled": true,
+      "surface_type": "Arbitrary",
+      "source_data": "DepthMapsData",
+      "face_count": "HighFaceCount",
+      "face_count_custom": 500000
+    },
+    "build_uv": {
+      "enabled": true,
+      "mapping_mode": "GenericMapping",
+      "texture_size": 8192
+    },
+    "build_texture": {
+      "enabled": true,
+      "blending_mode": "NaturalBlending",
+      "texture_size": 8192,
+      "texture_type": "DiffuseMap",
+      "source_data": "ImagesData"
+    }
+  },
+  "export": {
+    "output_dir": "output/terrestrial_object_scan_turntable/exports",
+    "report": {
+      "enabled": true,
+      "path": "output/terrestrial_object_scan_turntable/exports/report.pdf",
+      "title": "Turntable Object Scan"
+    },
+    "model": {
+      "enabled": true,
+      "path": "output/terrestrial_object_scan_turntable/exports/model.obj",
+      "format": "ModelFormatOBJ",
+      "texture_format": "ImageFormatJPEG"
+    }
+  }
+}
